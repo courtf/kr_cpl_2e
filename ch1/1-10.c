@@ -8,14 +8,24 @@ main()
         if (c == '\t') {
             putchar('\\');
             putchar('t');
-        } else if (c == '\b') {
+        }
+        
+        if (c == '\b') {
             putchar('\\');
             putchar('b');
-        } else if (c == '\\') {
+        }
+        
+        if (c == '\\') {
             putchar('\\');
             putchar('\\');
-        } else {
-            putchar(c);
+        }
+
+        if (!(c == '\t')) {
+            if (!(c == '\b')) {
+                if (!(c == '\\')) {
+                    putchar(c);
+                }
+            }
         }
     }
 }
