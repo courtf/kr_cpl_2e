@@ -1,0 +1,12 @@
+How would you test the word count program?
+
+1) Use very large input.
+2) Use very large input with a very large number of whitespace characters.
+3) Use very large input with zero whitespace characters.
+4) Use empty input.
+
+What kinds of input are most liekly to uncover bugs if there are any?
+
+A) Typically tests that encounter edge cases and boundaries of the program. Things like
+empty input, gigantic input (that might overflow the counter variables) and input
+that has no whitespace at all.

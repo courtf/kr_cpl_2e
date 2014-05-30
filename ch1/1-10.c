@@ -4,6 +4,8 @@ main()
 {
     int c;
 
+    // this is wacky because the book hasn't introduced
+    // the `else` statement yet
     while ((c = getchar()) != EOF) {
         if (c == '\t') {
             putchar('\\');
