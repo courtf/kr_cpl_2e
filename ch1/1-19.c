@@ -53,12 +53,14 @@ void reverse(char s[])
     }
     --i;
 
-    j = 0;
-    for (; i > j; --i) {
-        n = s[j];
-        m = s[i];
-        s[j] = m;
-        s[i] = n;
-        ++j;
+    if (i > 0) {
+        j = 0;
+        for (; i > j; --i) {
+            n = s[j];
+            m = s[i];
+            s[j] = m;
+            s[i] = n;
+            ++j;
+        }
     }
 }
