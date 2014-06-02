@@ -3,53 +3,67 @@
 #define MAXLINE     1000
 #define MAXLINES    MAXLINE
 
+// the current line
+char line[MAXLINE + 1];
+// keep track of detabbed lines for printing all at once
+char lines[MAXLINES][MAXLINE + 1];
+// keep track of how many lines we have added to 'lines'
+int linecount;
+
+void printLines(void);
+void addLine(int size);
 int detab(char s[], int tabstop, int size);
 
 main()
 {
-    // the current line
-    char line[MAXLINE + 1];
-    // keep track of detabbed lines for printing all at once
-    char lines[MAXLINES][MAXLINE + 1];
-
-    int c, i, j, linecount, len;
+    int c, i, j;
     i = linecount = 0;
     while ((c = getchar()) != EOF) {
         line[i] = c;
-        if (c == '\n' || i >= ((MAXLINE / TABSTOP) - 1)) {
-            // end of line or input, put down null termination
-            line[i + 1] = '\0';
-            // detab the current line
-            len = detab(line, TABSTOP, (i + 2));
+        if (i >= ((MAXLINE / TABSTOP) - 1)) {
+            addLine(i + 1);
             // start filling up 'line' again from 0
             i = 0;
-            
-            // copy 'line' into our list of lines
-            for (j = 0; j < len; ++j) {
-                lines[linecount][j] = line[j];
-            }
-            ++linecount;
 
-            // we are about to go over the linecount, print what we have so far
+            // if we are about to go over the linecount, print what we have so far
             if (linecount >= MAXLINES) {
-                for (j = 0; j < linecount; ++j) {
-                    printf("%s", lines[j]);
-                }
-
-                // start over adding lines
-                linecount = 0;
+                printLines();
             }
         } else {
             ++i;
         }
     }
 
-    for (j = 0; j < linecount; ++j) {
-        printf("%s", lines[j]);
+    // add any remaining characters to the list
+    if (i > 0) {
+        addLine(i);
     }
+
+    printLines();
     putchar('\n');
 
     return 0;
+}
+
+void printLines()
+{
+    int j;
+    for (j = 0; j < linecount; ++j) {
+        printf("%s", lines[j]);
+    }
+    linecount = 0;
+}
+
+void addLine(int size)
+{
+    int j, len;
+
+    line[size] = '\0';
+    len = detab(line, TABSTOP, (size + 1));
+    for (j = 0; j < len; ++j) {
+        lines[linecount][j] = line[j];
+    }
+    ++linecount;
 }
 
 /* assume that s has room for tab expansion */
