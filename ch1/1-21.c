@@ -12,7 +12,7 @@ int linecount;
 
 void printLines(void);
 void addLine(int size);
-int detab(char s[], int tabstop, int size);
+int entab(char s[], int tabstop, int size);
 
 main()
 {
@@ -21,7 +21,7 @@ main()
     while ((c = getchar()) != EOF) {
         line[i] = c;
         i++;
-        if (i > ((MAXLINE / TABSTOP) - 1)) {
+        if (i > MAXLINE) {
             addLine(i);
             // start filling up 'line' again from 0
             i = 0;
@@ -58,42 +58,54 @@ void addLine(int size)
     int j, len;
 
     line[size] = '\0';
-    len = detab(line, TABSTOP, (size + 1));
+    len = entab(line, TABSTOP, (size + 1));
     for (j = 0; j < len; ++j) {
         lines[linecount][j] = line[j];
     }
     ++linecount;
 }
 
-/* assume that s has room for tab expansion */
 /* size should include null termination character */
-int detab(char s[], int tabstop, int size)
+int entab(char s[], int tabstop, int size)
 {
-    int c, i, j, pos, len, spaces;
+    int c, i, j, pos, len, blanks; 
     len = size;
-    pos = 0;
+    pos = blanks = 0;
     for(i = 0; (c = s[i]) != '\0'; ++i) {
+        // any spaces not adjacent to a tabstop cannot be
+        // replaced with a tab, so any non-blank resets
+        // the count of blanks immediately.
+        if (c != ' ') {
+            blanks = 0;
+        }
+
         if (c == '\n') {
             pos = 0;
         } else if (c == '\t') {
-            // the position before this tab is X away from the next tabstop
-            // and that is the number of spaces we need to add.
-            spaces = tabstop - (pos % tabstop);
-            pos = pos + spaces;
+            pos = pos + (tabstop - (pos % tabstop));
+        } else if (c == ' ') {
+            ++pos;
+            ++blanks;
 
-            // shift the end of the array by 'spaces' - 1
-            for (j = (len - 1); j > i; --j) {
-                s[j + spaces - 1] = s[j];
-            }
-            // we have a new length
-            len = len + (spaces - 1);
+            // we are at a tabstop, see if we can replace
+            // any preceding blanks with a tab
+            if ((pos % tabstop) == 0) {
+                // if there was only 1 preceding blank, leave it as a space
+                if (blanks > 1) {
+                    s[i - (blanks - 1)] = '\t';
 
-            // insert spaces into the new gaps
-            for (j = i; j < (i + spaces); ++j) {
-                s[j] = ' ';
+                    // shift the array to the left by 'blanks' - 1
+                    for (j = (i + 1); j < len; ++j) {
+                        s[j - (blanks - 1)] = s[j];
+                    }
+                    // we have a new length
+                    len = len - (blanks -1);
+                    // and we have to move the index itself back too
+                    i = i - (blanks - 1);
+                }
+                // start over counting blanks after the tabstop
+                blanks = 0;
             }
-            // we can skip over the next couple of indexes
-            i = i + (spaces - 1);
         } else {
             ++pos;
         }
