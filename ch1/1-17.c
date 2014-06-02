@@ -5,7 +5,6 @@
 // 'getLine' with a capital 'L' because 'getline' is defined in the stdlib
 int getLine(char line[], int maxline);
 
-/* print longest input line */
 main()
 {
     int len;                        /* current line length */

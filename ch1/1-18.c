@@ -4,13 +4,12 @@
 // 'getLine' with a capital 'L' because 'getline' is defined in the stdlib
 int getLine(char line[], int maxline);
 
-/* print longest input line */
 main()
 {
     int len;                        /* current line length */
     int i, j, k;
     char line[MAXLINE];             /* current input line */
-    char trimmed[MAXLINE][MAXLINE];  /* keep track of lines over 80 */
+    char trimmed[MAXLINE][MAXLINE]; /* keep track of trimmed lines */
 
     i = 0;
     while ((len = getLine(line, MAXLINE)) >= 0) {

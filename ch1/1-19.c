@@ -5,11 +5,9 @@
 int getLine(char line[], int maxline);
 void reverse(char s[]);
 
-/* print longest input line */
 main()
 {
     char line[MAXLINE];     /* current input line */
-    char longest[MAXLINE];  /* longest line saved here */
 
     while (getLine(line, MAXLINE) > 0) {
         printf("%s\n", line);

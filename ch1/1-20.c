@@ -5,7 +5,6 @@
 
 int detab(char s[], int tabstop, int size);
 
-/* print longest input line */
 main()
 {
     // the current line
