@@ -5,7 +5,7 @@
 
 // the current line
 char line[MAXLINE + 1];
-// keep track of detabbed lines for printing all at once
+// keep track of folded lines for printing all at once
 char lines[MAXLINES][MAXLINE + 1];
 // keep track of how many lines we have added to 'lines'
 int linecount;
@@ -21,7 +21,7 @@ main()
     while ((c = getchar()) != EOF) {
         line[i] = c;
         i++;
-        if (i > MAXLINE) {
+        if (i > MAXLINE - 10) {
             addLine(i);
             // start filling up 'line' again from 0
             i = 0;
