@@ -105,12 +105,12 @@ void syntaxCheck(char s[])
                         ++ln;
                     }
                 }
-                if (s[j + 1] == '\0') {
+                if (s[j] == '\0') {
                     printMissing(ln, col, "*/");
                 } else {
                     ++col;
                 }
-                i = s[j + 1] == '\0' ? j : j + 1;
+                i = s[j] == '\0' ? j : j + 1;
             } else if (c == '[') {
                 ++squares;
             } else if (c == ']') {
