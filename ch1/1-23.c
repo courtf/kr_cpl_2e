@@ -74,7 +74,7 @@ int decomment(char s[], int size)
     len = size;
     inString = 0;
     for(i = 0; (c = s[i]) != '\0' && i < len; ++i) {
-        if ((c == '"' || c == '\'') && i - 1 > 0 && s[i - 1] != '\\') {
+        if ((c == '\"' || c == '\'') && (i - 1 < 0 || s[i - 1] != '\\')) {
             inString = inString ? 0 : 1;
         } else if (c == '/' && s[i + 1] == '/' && !inString) {
             // count the distance to the end of the line
@@ -83,8 +83,8 @@ int decomment(char s[], int size)
             len = len - collapse(s, len, j, countLeadingWhitespace(s, i - 1));
         } else if (c == '/' && s[i + 1] == '*' && !inString) {
             // count distance to comment closing
-            for (j = i + 2; s[j + 1] != '\0' && !(s[j] == '*' && s[j+1] == '/'); ++j) {}
-            j = j + 2;
+            for (j = i + 2; s[j] != '\0' && !(s[j] == '*' && s[j+1] == '/'); ++j) {}
+            j = s[j] == '\0' ? : j + 2;
 
             len = len - collapse(s, len, j, countLeadingWhitespace(s, i - 1));
         }
