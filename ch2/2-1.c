@@ -2,7 +2,7 @@
 #include <limits.h>
 #include <float.h>
 
-unsigned long binPow(unsigned int exp);
+unsigned long binPow(const unsigned char exp);
 
 main()
 {
@@ -32,7 +32,7 @@ main()
     printf("unsigned long range: %d  -  %lu\n", 0, max_lng);
 }
 
-unsigned long binPow(unsigned int exp)
+unsigned long binPow(const unsigned char exp)
 {
     unsigned long returnVal = 1;
     int i;
