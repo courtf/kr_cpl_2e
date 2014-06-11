@@ -4,7 +4,7 @@ unsigned setbits(unsigned x, unsigned p, unsigned n, unsigned y);
 
 main()
 {
-    printf("%d\n", setbits(077, 4, 3, 0));
+    printf("%u\n", setbits(077, 4, 3, 0));
 }
 
 unsigned setbits(unsigned x, unsigned p, unsigned n, unsigned y)
